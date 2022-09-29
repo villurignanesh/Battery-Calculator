@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <title>Battery Life Calculator</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Twitter Card-->
+    <meta name="twitter:title" content="Battery Life Calculator">
+    <meta name="twitter:site" content="variablo87.github.io/batterycalc/" />
+    <meta name="twitter:description" content="This App calculate the battery life of your embedded device.">
+    <meta name="twitter:image" content="img/icons/icon-96x96.png">
+    <meta name="twitter:card" content="img/icons/icon-96x96.png">
+    <meta name="description" content="This script checks your Date of Birth and detects the Day of the Week you were born.">
+    <!--Open Graph-->
+    <meta property="og:image" content="img/icons/icon-96x96.png">
+    <meta property="og:title" content="Battery Life Calculator" />
+    <meta name="author" content="variablo87">
+    <meta property="og:description" content="This App calculate the battery life of your embedded device." />
+    <meta name="author" content="variablo87">
+    <meta property="og:url" content="variablo87.github.io/batterycalc/" />
+    <meta property="og:site_name" content="Battery Life Calculator" />
+    <meta property="og:type" content="Battery Life Calculator" />
+
+    <!-- Google Knowledge Graph card -->
+    <script type='application/ld+json'>
+        {
+            "@context": "http://www.schema.org",
+            "@type": "Battery Life Calculator",
+            "name": "Battery Life Calculator",
+            "url": "variablo87.github.io/batterycalc/",
+            "logo": "variablo87.github.io/batterycalc/img/icons/icon-96x96.png",
+            "description": "This App calculate the battery life of your embedded device."
+        }
+    </script>
+    <!--Bootstrap CDN-->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Main Stylesheet-->
+    <link rel="stylesheet" type="text/css" media="screen" href="css/app.css" />
+    <!-- start of web manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!--logo-->
+    <link rel="shortcut icon" href="img/icons/icon-96x96.png">
+
+    <meta name="theme-color" content="#317EFB"/>
+    <!-- CODELAB: Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Battery Calc">
+    <link rel="apple-touch-startup-image" href="img/launch.png">
+    <link rel="apple-touch-icon" href="img/icons/icon-512x512.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/icons/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/icons/icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/icons/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/icons/icon-152x152.png">
+
+</head>
+
+<body onload="getSettings()" >
+    
+<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-right" style="width:200px;right:0;" id="mySidebar">
+  <button class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Close&nbsp;&nbsp;&times;</button>
+  <button class="w3-bar-item w3-button w3-large w3-hide-large" onclick="saveSettings();">Save&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-save"></i></button>
+  <button class="w3-bar-item w3-button w3-large w3-hide-large" onclick="shareResults();">Share&nbsp;&nbsp;<i class="fa fa-share"></i></button>
+  <a href="#general_settings" class="w3-bar-item w3-button">general settings</a>
+  <a href="#task_settings" class="w3-bar-item w3-button">task settings</a>
+  <a href="#results" class="w3-bar-item w3-button">results</a>
+</div>
+
+<div class="w3-main" style="margin-right:200px">
+<div class="w3-theme-d1">
+  
+  <div class="w3-container">
+    <h1>Battery Life
+    <button class="w3-button w3-theme-d1 w3-xlarge w3-right w3-hide-large" onclick="w3_open()">&#9776;</button>
+    </h1>
+  </div>
+</div>
+
+
+<form id="form1">
+  <div class="w3-row-padding w3-section">
+      
+  <a name="general_settings"></a>
+  <div class="w3-half">
+    <div class="w3-card">
+        <table class="w3-table w3-bordered w3-striped">
+            <tr class="w3-theme" style="height:60px">
+              <td colspan="2">
+                <select class="w3-select w3-theme" name="option">
+                  <option value="" disabled selected>Choose your option</option>
+                  <option value="1">Option 1</option>
+                  <option value="2">Option 2</option>
+                  <option value="3">Option 3</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align:middle">capacity</td>
+              <td><input id="capacity" class="w3-input w3-border" type="number" placeholder="1500 mAh" name="capacity"></td>
+            </tr>
+            <tr>
+              <td style="vertical-align:middle">number of batterys</td>
+              <td><input class="w3-input w3-border" type="number" placeholder="3 x" name="n_battery"></td>
+            </tr>
+            <tr>
+              <td style="vertical-align:middle">sleep current</td>
+              <td><input class="w3-input w3-border" type="number" placeholder="0.02 mA" name="sleep_c"></td>
+            </tr>
+        </table>                                         
+    </div>
+  </div>
+
+  <a name="task_settings"></a>
+  <div class="w3-half">
+    <div class="w3-card">
+        <table class="w3-table w3-bordered w3-striped">
+            <tr class="w3-theme" style="height:60px">
+              <th>task</th>
+              <th>wakeup current</th>
+              <th>wakeup time</th>
+              <th>wakeups</th>
+            </tr>
+            <tr>
+              <td style="vertical-align:middle">1</td>
+              <td><input type="number" name="wake_c_1" class="w3-input w3-border" placeholder="5 mA"></td>
+              <td><input type="number" name="wake_t_1" class="w3-input w3-border" placeholder="500 ms"></td>
+              <td><input type="number" name="wake_n_1" class="w3-input w3-border" placeholder="1 \h"></td>
+            </tr>
+            <tr>
+              <td style="vertical-align:middle">2</td>
+              <td><input type="number" name="wake_c_2" class="w3-input w3-border" placeholder="5 mA"></td>
+              <td><input type="number" name="wake_t_2" class="w3-input w3-border" placeholder="500 ms"></td>
+              <td><input type="number" name="wake_n_2" class="w3-input w3-border" placeholder="1 \h"></td>
+            </tr>
+            <tr>
+              <td style="vertical-align:middle">3</td>
+              <td><input type="number" name="wake_c_3" class="w3-input w3-border" placeholder="5 mA"></td>
+              <td><input type="number" name="wake_t_3" class="w3-input w3-border" placeholder="500 ms"></td>
+              <td><input type="number" name="wake_n_3" class="w3-input w3-border" placeholder="1 \h"></td>
+            </tr>
+        </table>
+    </div>
+  </div>
+</div>
+
+<a name="results"></a>
+<div class="w3-card">
+    <div class="w3-container"> 
+   		 <br />
+        <div class="w3-bar">
+          <button type="button" class="w3-bar-item w3-button w3-theme w3-round-xlarge" style="width:50%"  onclick="compute(this.form)">Calculate</button>
+          <button type="reset" class="w3-bar-item w3-button w3-red w3-round-xlarge" style="width:50%">Clear</button>
+        </div>
+        <br />
+    
+        <a name="results"></a>
+        <ul class="w3-ul">
+          <li>days <input id="result" type="text" name="result1" style="width:50%" readonly></li>
+          <li>years <input id="result" type="text" name="result2" style="width:50%" readonly></li>
+        </ul>
+         
+    </div>
+</div>
+</form>
+
+<footer class="w3-container w3-theme-d1">
+    <h5>Source code: </h5>
+    <p><a href="https://github.com/variablo87/batterycalc" target="_blank">Github</a></p>
+</footer>
+
+</div>
+
+<!-- register service worker -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(function () {
+                    console.log("Service Worker Registered, Cheers to PWA Fire!");
+                });
+        });
+    }
+    
+
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+
+</script>
+<!-- end of service worker -->
+    
+<script src="js/app.js"></script>
+
+</body>
+
+</html>
